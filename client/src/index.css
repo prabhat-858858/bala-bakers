@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+    color: #082B59;
+    background-color: #FFFBF4;
+  }
+
+  h1, h2, h3, h4, .font-display {
+    font-family: 'Playfair Display', Georgia, serif;
+  }
+}
+
+/* Responsive fluid typography using clamp() per modern-web-guidance */
+.hero-headline {
+  font-size: clamp(2.15rem, 1.5rem + 3vw, 3.75rem);
+  line-height: 1.12;
+}
+
+.section-heading {
+  font-size: clamp(1.75rem, 1.25rem + 1.8vw, 2.5rem);
+  line-height: 1.2;
+}
+
+/* Prevent layout shift on product imagery */
+.product-image-aspect {
+  aspect-ratio: 4 / 3;
+}
