@@ -31,11 +31,11 @@ app.use(
 const allowedOrigins = [
   
    process.env.CLIENT_URL 
-  //|| 'http://localhost:5173',
-  // 'http://localhost:5173',
-  // 'http://127.0.0.1:5173',
-  // 'http://localhost:4173',
-  // 'https://client-yw4b.vercel.app/',
+  || 'http://localhost:5173',
+  'http://localhost:5173',
+  'http://127.0.0.1:5173',
+  'http://localhost:4173',
+  'https://client-yw4b.vercel.app/',
 ].filter(Boolean);
 
 app.use(
