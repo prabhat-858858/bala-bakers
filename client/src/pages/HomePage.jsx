@@ -162,10 +162,10 @@ export default function HomePage() {
             <div className="lg:col-span-5">
               <div className="relative rounded-3xl overflow-hidden border-4 border-[#D8B46A] shadow-2xl bg-[#051C3B]">
                 <img
-                  src="https://res.cloudinary.com/dk6gxpotq/image/upload/v1794227361/belaImage_z9gga1.jpg"
-                  alt="Bela Bakers Signature Chocolate Truffle Cake"
+                  src="https://res.cloudinary.com/dk6gxpotq/image/upload/t_third/belaImage_z9gga1.jpg"
+                  alt="Bela Cakes & Deserts Signature Chocolate Truffle Cake"
                   fetchpriority="high"
-                  className="w-full h-[360px] sm:h-[440px] object-cover"
+                  className="w-full h-[360px] sm:h-[440px] object-contain"
                 />
                 <div className="absolute bottom-4 left-4 right-4 bg-[#082B59]/90 backdrop-blur-md border border-[#D8B46A]/50 rounded-2xl p-4 text-[#FFF0D9]">
                   <p className="font-serif text-lg font-bold text-white">
