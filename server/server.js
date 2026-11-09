@@ -30,7 +30,7 @@ app.use(
 // CORS configuration with credentials support for HTTP-only cookies
 const allowedOrigins = [
   
-   process.env.CLIENT_URL 
+   process.env.CLIENT_URL||process.env.DOMAIN 
   || 'http://localhost:5173',
   'http://localhost:5173',
   'http://127.0.0.1:5173',
