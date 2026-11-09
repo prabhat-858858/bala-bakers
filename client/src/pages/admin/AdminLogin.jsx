@@ -39,7 +39,7 @@ export default function AdminLogin() {
             <Cake className="w-6 h-6 text-[#D8B46A]" />
           </div>
           <span className="font-serif text-3xl font-bold text-[#082B59]">
-            Bela Bakers
+            Bela Cakes & deserts
           </span>
         </Link>
         <h1 className="font-serif text-2xl font-bold text-[#082B59]">
