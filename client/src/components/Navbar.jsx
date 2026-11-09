@@ -55,7 +55,7 @@ export default function Navbar() {
           </div>
           <div>
             <span className="block font-serif text-2xl font-bold tracking-tight text-[#082B59] leading-none">
-              Bela Bakers
+              <h1>Bela </h1><h5 className='small'>Cakes & Deserts</h5>
             </span>
             <span className="block text-[11px] uppercase tracking-[0.2em] text-[#BC964B] font-semibold mt-1">
               Gopalganj • Est. Artisanal Bakery

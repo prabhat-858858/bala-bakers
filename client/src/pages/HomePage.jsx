@@ -83,7 +83,7 @@ export default function HomePage() {
   });
 
   useEffect(() => {
-    document.title = 'Bela Bakers | Every Celebration Deserves a Beautiful Cake — Gopalganj';
+    document.title = 'Bela Cakes & Deserts | Every Celebration Deserves a Beautiful Cake — Gopalganj';
     let isMounted = true;
     (async () => {
       try {
@@ -120,7 +120,7 @@ export default function HomePage() {
             <div className="lg:col-span-7 space-y-6">
               <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/10 border border-[#D8B46A]/50 text-[#D8B46A] text-xs sm:text-sm font-semibold tracking-wide">
                 <Sparkles className="w-4 h-4" />
-                <span>Bela Bakers • Cinema Road, Gopalganj</span>
+                <span>Bela Cakes & Deserts • Gopalganj, Bihar</span>
               </div>
 
               <h1 className="hero-headline font-serif font-bold text-white tracking-tight">
@@ -162,7 +162,7 @@ export default function HomePage() {
             <div className="lg:col-span-5">
               <div className="relative rounded-3xl overflow-hidden border-4 border-[#D8B46A] shadow-2xl bg-[#051C3B]">
                 <img
-                  src="https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=1100&q=85"
+                  src="https://res.cloudinary.com/dk6gxpotq/image/upload/v1794227361/belaImage_z9gga1.jpg"
                   alt="Bela Bakers Signature Chocolate Truffle Cake"
                   fetchpriority="high"
                   className="w-full h-[360px] sm:h-[440px] object-cover"
@@ -172,7 +172,7 @@ export default function HomePage() {
                     Handcrafted Fresh Every Morning
                   </p>
                   <p className="text-xs text-[#FFF0D9]/80 mt-0.5">
-                    Dayal Complex, Cinema Road, Near Ambedkar Chowk, Gopalganj
+                   Gopalganj, Bihar
                   </p>
                 </div>
               </div>

@@ -1,8 +1,8 @@
 export const BUSINESS_INFO = {
   name: 'Bela Bakers',
   category: 'Cakes, pastries, cupcakes, cookies, donuts, and desserts',
-  phoneDisplay: '9060305323',
-  whatsappNumber: '919060305323',
+  phoneDisplay: '8084095323',
+  whatsappNumber: '918084095323',
   location: 'Gopalganj, Bihar, India',
   address: 'Dayal Complex, Cinema Road, Near Ambedkar Chowk, Gopalganj',
   instagram: 'https://www.instagram.com/bela.desserts',
