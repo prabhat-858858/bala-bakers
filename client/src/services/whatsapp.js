@@ -4,7 +4,7 @@ export const BUSINESS_INFO = {
   phoneDisplay: '8084095323',
   whatsappNumber: '918084095323',
   location: 'Gopalganj, Bihar, India',
-  address: 'Dayal Complex, Cinema Road, Near Ambedkar Chowk, Gopalganj',
+  address: 'Gopalganj,Bihar',
   instagram: 'https://www.instagram.com/bela.desserts',
   facebook: 'https://www.facebook.com/share/19vyPgVh6g/',
   whatsappOrderNotice:

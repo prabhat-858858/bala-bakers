@@ -23,7 +23,7 @@ export default function Footer() {
                 <Cake className="w-5 h-5 text-[#082B59]" />
               </div>
               <span className="font-serif text-2xl font-bold text-white">
-                Bela Bakers
+                Bela Cakes & Deserts
               </span>
             </div>
             <p className="text-sm text-[#FFF0D9]/80 leading-relaxed">
@@ -116,7 +116,7 @@ export default function Footer() {
           {/* Column 4: Visit & Social */}
           <div className="space-y-4">
             <h3 className="font-serif text-lg font-semibold text-[#D8B46A]">
-              Visit Bela Bakers
+              Visit Bela Cakes & Deserts
             </h3>
             <div className="space-y-3 text-sm text-[#FFF0D9]/85">
               <p className="flex items-start gap-2.5">

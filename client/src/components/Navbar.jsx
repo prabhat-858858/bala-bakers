@@ -44,15 +44,19 @@ export default function Navbar() {
 
       {/* Main Navigation Bar */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-        {/* Bela Bakers Brand Logo */}
+        <img
+          src="https://res.cloudinary.com/dk6gxpotq/image/upload/t_firstLogo/BelaLogo_amdo6a.jpg"
+          alt="Bela Cakes & Deserts Brand Logo"
+          className="rounded-full w-16 h-16 object-contain"
+        />
         <Link
           to="/"
-          className="flex items-center gap-3 group focus:outline-none"
+          className=" flex items-center gap-3 group focus:outline-none"
           aria-label="Bela Bakers Home"
         >
-          <div className="w-11 h-11 rounded-full bg-[#082B59] border-2 border-[#D8B46A] flex items-center justify-center text-[#FFF0D9] shadow-md group-hover:scale-105 transition-transform">
+          {/* <div className="w-11 h-11 rounded-full bg-[#082B59] border-2 border-[#D8B46A] flex items-center justify-center text-[#FFF0D9] shadow-md group-hover:scale-105 transition-transform">
             <Cake className="w-5 h-5 text-[#D8B46A]" />
-          </div>
+          </div> */}
           <div>
             <span className="block font-serif text-2xl font-bold tracking-tight text-[#082B59] leading-none">
               <h1>Bela </h1><h5 className='small'>Cakes & Deserts</h5>
@@ -69,13 +73,13 @@ export default function Navbar() {
             Home
           </NavLink>
           <NavLink to="/shop" className={navLinkClasses}>
-            Shop Catalogue
+            Products
           </NavLink>
           <NavLink to="/shop?category=Custom+Cakes" className={navLinkClasses}>
-            Custom Cakes
+            Our Cake
           </NavLink>
           <NavLink to="/contact" className={navLinkClasses}>
-            Contact the Shop
+            Contact
           </NavLink>
         </nav>
 
