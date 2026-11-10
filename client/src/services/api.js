@@ -1,4 +1,14 @@
-const API_BASE = import.meta.env.VITE_API_BASE_URL || '/api';
+const getApiBase = () => {
+  let raw = import.meta.env.VITE_API_BASE_URL || '/api';
+  raw = raw.trim().replace(/\/+$/, '');
+  // If an external URL was provided without trailing /api, automatically append /api
+  if (raw.startsWith('http') && !raw.endsWith('/api')) {
+    raw = `${raw}/api`;
+  }
+  return raw;
+};
+
+const API_BASE = getApiBase();
 
 async function request(endpoint, options = {}) {
   const isFormData = options.body instanceof FormData;
@@ -9,17 +19,35 @@ async function request(endpoint, options = {}) {
         ...(options.headers || {}),
       };
 
-  const response = await fetch(`${API_BASE}${endpoint}`, {
-    ...options,
-    headers,
-    credentials: 'include',
-  });
-
-  const data = await response.json().catch(() => ({}));
-  if (!response.ok) {
-    throw new Error(data.message || `Request failed with status ${response.status}`);
+  // Support Bearer token header fallback alongside HTTP-only cookies
+  const token = localStorage.getItem('bela_admin_token');
+  if (token && !headers['Authorization']) {
+    headers['Authorization'] = `Bearer ${token}`;
   }
-  return data;
+
+  const cleanEndpoint = endpoint.startsWith('/') ? endpoint : `/${endpoint}`;
+  const targetUrl = `${API_BASE}${cleanEndpoint}`;
+
+  try {
+    const response = await fetch(targetUrl, {
+      ...options,
+      headers,
+      credentials: 'include',
+    });
+
+    const data = await response.json().catch(() => ({}));
+    if (!response.ok) {
+      throw new Error(data.message || `Request failed with status ${response.status}`);
+    }
+    return data;
+  } catch (error) {
+    if (error.name === 'TypeError' && error.message.toLowerCase().includes('fetch')) {
+      throw new Error(
+        `Unable to reach backend API at ${API_BASE}. If using Render free tier, the server may take 30-50 seconds to wake up from idle. Please check VITE_API_BASE_URL on Vercel and ensure Render is live.`
+      );
+    }
+    throw error;
+  }
 }
 
 export const api = {
@@ -51,15 +79,25 @@ export const api = {
     }),
 
   // Owner Authentication
-  login: (credentials) =>
-    request('/auth/login', {
+  login: async (credentials) => {
+    const data = await request('/auth/login', {
       method: 'POST',
       body: JSON.stringify(credentials),
-    }),
-  logout: () =>
-    request('/auth/logout', {
-      method: 'POST',
-    }),
+    });
+    if (data.token) {
+      localStorage.setItem('bela_admin_token', data.token);
+    }
+    return data;
+  },
+  logout: async () => {
+    try {
+      await request('/auth/logout', {
+        method: 'POST',
+      });
+    } finally {
+      localStorage.removeItem('bela_admin_token');
+    }
+  },
   getMe: () => request('/auth/me'),
 
   // Manual Order Tracking (Admin Only)
