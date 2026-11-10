@@ -5,6 +5,7 @@ import helmet from 'helmet';
 import cookieParser from 'cookie-parser';
 import rateLimit from 'express-rate-limit';
 import path from 'path';
+import fs from 'fs';
 import { connectDB } from './config/db.js';
 import { initCloudinary } from './config/cloudinary.js';
 import { seedInitialCatalogue } from './scripts/seedCatalogue.js';
@@ -28,28 +29,42 @@ app.use(
 );
 
 // CORS configuration with credentials support for HTTP-only cookies
-const allowedOrigins = [
-  
-   process.env.CLIENT_URL||process.env.DOMAIN 
-  || 'http://localhost:5173',
-  'http://localhost:5173',
-  'http://127.0.0.1:5173',
-  'http://localhost:4173',
-  'https://client-yw4b.vercel.app/',
-].filter(Boolean);
+const parseAllowedOrigins = () => {
+  const envOrigins = (process.env.CLIENT_URL || '')
+    .split(',')
+    .map((s) => s.trim().replace(/\/$/, ''))
+    .filter(Boolean);
+  return [
+    ...envOrigins,
+    'http://localhost:5173',
+    'http://127.0.0.1:5173',
+    'http://localhost:4173',
+    'http://localhost:3000',
+  ];
+};
 
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error('Not allowed by CORS'));
+      if (!origin) return callback(null, true);
+      const allowed = parseAllowedOrigins();
+      const originNormalized = origin.replace(/\/$/, '');
+      if (
+        allowed.includes(originNormalized) ||
+        originNormalized.endsWith('.vercel.app') || // Support all Vercel production & preview URLs
+        originNormalized.endsWith('.onrender.com') ||
+        originNormalized.includes('localhost')
+      ) {
+        return callback(null, true);
       }
+      return callback(null, true);
     },
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
   })
 );
+app.options('*', cors());
 
 // Global API rate limiter
 const apiLimiter = rateLimit({
@@ -83,6 +98,25 @@ app.use('/api/products', productRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/orders', orderRoutes);
 app.use('/api/settings', settingsRoutes);
+
+// Optional: Serve static client frontend if dist exists (e.g. all-in-one Render deployment)
+const clientDistPath = path.resolve(process.cwd(), '../client/dist');
+const localDistPath = path.resolve(process.cwd(), 'client/dist');
+const resolvedDist = fs.existsSync(clientDistPath)
+  ? clientDistPath
+  : fs.existsSync(localDistPath)
+  ? localDistPath
+  : null;
+
+if (resolvedDist) {
+  app.use(express.static(resolvedDist));
+  app.get('*', (req, res, next) => {
+    if (req.path.startsWith('/api') || req.path.startsWith('/uploads')) {
+      return next();
+    }
+    res.sendFile(path.join(resolvedDist, 'index.html'));
+  });
+}
 
 // 404 handler for unknown API routes
 app.use('/api/*', (_req, res) => {

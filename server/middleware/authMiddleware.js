@@ -12,7 +12,11 @@ export const getJwtSecret = () => {
 
 export const requireOwnerAuth = async (req, res, next) => {
   try {
-    const token = req.cookies?.[COOKIE_NAME];
+    let token = req.cookies?.[COOKIE_NAME];
+    if (!token && req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+      token = req.headers.authorization.split(' ')[1];
+    }
+
     if (!token) {
       return res.status(401).json({
         success: false,
@@ -42,7 +46,10 @@ export const requireOwnerAuth = async (req, res, next) => {
 
 export const optionalOwnerAuth = async (req, _res, next) => {
   try {
-    const token = req.cookies?.[COOKIE_NAME];
+    let token = req.cookies?.[COOKIE_NAME];
+    if (!token && req.headers.authorization && req.headers.authorization.startsWith('Bearer ')) {
+      token = req.headers.authorization.split(' ')[1];
+    }
     if (token) {
       const decoded = jwt.verify(token, getJwtSecret());
       const admin = await AdminUser.findById(decoded.id).select('-passwordHash');
