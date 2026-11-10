@@ -24,12 +24,21 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     const data = await api.login({ email, password });
+    if(data.token){
+      localStorage.setItem('bela_admin_token',data.token);
+    }else{
+       throw new Error('Authentication token not received from server');
+    }
     setAdmin(data.admin);
     return data;
   };
 
   const logout = async () => {
+    try{
     await api.logout();
+    }finally{
+      localStorage.removeItem('bela_admin_token');
+    }
     setAdmin(null);
   };
 
